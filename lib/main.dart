@@ -33,8 +33,6 @@ class QuizPage extends StatefulWidget {
 class _QuizPageState extends State<QuizPage> {
   List<Widget> scoreKeeper = [];
 
-  int questionNumber = 0;
-
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -47,7 +45,7 @@ class _QuizPageState extends State<QuizPage> {
               padding: const EdgeInsets.all(10.0),
               child: Center(
                 child: Text(
-                  quizBrain.questionBank[questionNumber].questionText,
+                  quizBrain.getQuestionText(),
                   textAlign: TextAlign.center,
                   style: const TextStyle(fontSize: 25.0, color: Colors.white),
                 ),
@@ -62,11 +60,10 @@ class _QuizPageState extends State<QuizPage> {
                   backgroundColor: MaterialStateProperty.all(Colors.green),
                 ),
                 onPressed: () {
-                  bool correctAnswer =
-                      quizBrain.questionBank[questionNumber].answerText;
+                  bool correctAnswer = quizBrain.getCorrectAnswer();
                   if (correctAnswer == true) {
                     setState(() {
-                      questionNumber++;
+                      quizBrain.nextQuestion();
                       scoreKeeper.add(const Icon(
                         Icons.check,
                         color: Colors.green,
@@ -74,7 +71,7 @@ class _QuizPageState extends State<QuizPage> {
                     });
                   } else {
                     setState(() {
-                      questionNumber++;
+                      quizBrain.nextQuestion();
                       scoreKeeper.add(const Icon(
                         Icons.close,
                         color: Colors.red,
@@ -97,11 +94,10 @@ class _QuizPageState extends State<QuizPage> {
                   backgroundColor: MaterialStateProperty.all(Colors.red),
                 ),
                 onPressed: () {
-                  bool correctAnswer =
-                      quizBrain.questionBank[questionNumber].answerText;
+                  bool correctAnswer = quizBrain.getCorrectAnswer();
                   if (correctAnswer == false) {
                     setState(() {
-                      questionNumber++;
+                      quizBrain.nextQuestion();
                       scoreKeeper.add(const Icon(
                         Icons.check,
                         color: Colors.green,
@@ -109,7 +105,7 @@ class _QuizPageState extends State<QuizPage> {
                     });
                   } else {
                     setState(() {
-                      questionNumber++;
+                      quizBrain.nextQuestion();
                       scoreKeeper.add(const Icon(
                         Icons.close,
                         color: Colors.red,
